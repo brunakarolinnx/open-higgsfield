@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { CSSProperties, ReactNode } from "react";
 
-import { parseSettings } from "@/generation/catalog";
+import { coerceSettings } from "@/generation/catalog";
 import type { ModelEntry, Surface } from "@/generation/catalog";
 import { MAX_BATCH, useActive } from "@/generation/stores/active";
 import { useImagePrompt, useVideoPrompt } from "@/generation/stores/prompt";
@@ -83,7 +83,7 @@ export function Composer({
   const videoPrompt = useVideoPrompt();
   const prompt = surface === "image" ? imagePrompt : videoPrompt;
   const settings = useSettings();
-  const values = parseSettings(model, settings.byModel[model.id] ?? {});
+  const values = coerceSettings(model, settings.byModel[model.id] ?? {});
   const tray = useMediaTray(model, onError);
 
   const [overlay, setOverlay] = useState<string | null>(null);
